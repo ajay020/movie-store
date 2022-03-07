@@ -1,3 +1,5 @@
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const config = require('config');
 const debug = require('debug')('app:startup');
 
@@ -37,11 +39,12 @@ if(app.get('env') === 'development'){
     debug("morgan is enabled..."); // it's better than console.log();
 }
 
-
-
 const PORT = process.env.PORT || 5000;
 
-app.use('/api/genres', require('./routes/genre/genreRoute'));
+app.use('/api/genres', require('./routes/genreRoute'));
+app.use('/api/customers', require('./routes/customerRoute'));
+app.use('/api/movies', require('./routes/movieRoute'));
+app.use('/api/rentals', require('./routes/rentalRoute'));
 
 
 app.listen(PORT, () => console.log('Server start on port... ' + PORT))

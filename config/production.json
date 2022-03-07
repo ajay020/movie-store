@@ -1,0 +1,6 @@
+{
+    "name":"MovieStore app -Production",
+    "mail":{
+        "host":"Prod-mail-server"
+    }
+}

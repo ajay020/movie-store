@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // const dbDebugger = require('debug')('app:db');
 
 
-mongoose.connect("mongodb://localhost/movies")
+mongoose.connect("mongodb://localhost/movieStore")
     .then(()=> console.log("Connected to MongoDB..."))
     .catch((err) => console.log('Could not connect to MongoDB....', err));
 
