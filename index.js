@@ -7,11 +7,15 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 
-// require('dotenv').config();
-
 const app = express(); 
 
 require('./db/db');
+
+//check if jwtPrivateKey is set
+if(!config.get('jwtPrivatKey')){
+    console.log("FATAL ERROR: jwt secret key is not found");
+    process.exit(1); //exit with error code 
+}
 
 //body parser
 app.use(express.json());
@@ -31,7 +35,7 @@ app.use(helmet());
   app.get('env') return development if NODE_ENV is not set.
  */
 
-  console.log(process.env.NODE_ENV);
+//   console.log(process.env.NODE_ENV);
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
@@ -45,6 +49,8 @@ app.use('/api/genres', require('./routes/genreRoute'));
 app.use('/api/customers', require('./routes/customerRoute'));
 app.use('/api/movies', require('./routes/movieRoute'));
 app.use('/api/rentals', require('./routes/rentalRoute'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/auth'));
 
 
 app.listen(PORT, () => console.log('Server start on port... ' + PORT))

@@ -1,5 +1,5 @@
 const express = require('express');
-const res = require('express/lib/response');
+const auth = require('../middleware/auth');
 const { Genre } = require('../models/genreModel');
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/', async(req, res)=>{
     res.send(movies);
 })
 
-router.post("/", async (req, res)=>{
+router.post("/", auth, async (req, res)=>{
     const {error} = validateMovie(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -28,9 +28,9 @@ router.post("/", async (req, res)=>{
     })
     
     /** 
-     *  object id is created by mongodb driver
-     *  before saving the document to db, mongoose communicate to mongodb driver
-     * and set id
+     *  object id is created by mongodb driver  before 
+     *  saving the document to db, mongoose communicate to mongodb driver  and set id.
+     * so even before saving the movie object, Its id property is created.
     */
 
     await movie.save();

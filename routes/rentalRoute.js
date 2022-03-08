@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const Fawn = require("fawn");
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get("/", async (req, res)=>{
     res.send(rentals);
 })
 
-router.post("/", async (req, res)=>{
+router.post("/", auth, async (req, res)=>{
     const {error} = validateRental(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
